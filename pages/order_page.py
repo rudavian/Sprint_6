@@ -1,8 +1,11 @@
+import allure
+
 from pages.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
 
 
 class OrderPage(BasePage):
+    @allure.step("Заполнить первую форму заказа")
     def fill_first_order_form(self, name, surname, address, metro_station, phone):
         self.clear_and_send_keys(OrderPageLocators.NAME_INPUT, name)
         self.clear_and_send_keys(OrderPageLocators.SURNAME_INPUT, surname)
@@ -11,9 +14,11 @@ class OrderPage(BasePage):
         self.click_element(OrderPageLocators.metro_station(metro_station))
         self.clear_and_send_keys(OrderPageLocators.PHONE_INPUT, phone)
 
+    @allure.step("Нажать кнопку Далее")
     def click_next_button(self):
         self.click_element(OrderPageLocators.NEXT_BUTTON)
 
+    @allure.step("Заполнить вторую форму заказа")
     def fill_second_order_form(self, delivery_date, rent_period, color, comment):
         self.clear_and_send_keys(OrderPageLocators.DELIVERY_DATE_INPUT, delivery_date)
         self.click_body()
@@ -26,15 +31,19 @@ class OrderPage(BasePage):
         self.click_element(color_locators[color])
         self.clear_and_send_keys(OrderPageLocators.COMMENT_INPUT, comment)
 
+    @allure.step("Нажать кнопку Заказать")
     def submit_order(self):
         self.click_element(OrderPageLocators.ORDER_BUTTON)
 
+    @allure.step("Подтвердить заказ")
     def confirm_order(self):
         self.click_element(OrderPageLocators.CONFIRM_ORDER_BUTTON)
 
+    @allure.step("Получить сообщение об успешном заказе")
     def get_success_order_message(self):
         return self.wait_for_visible(OrderPageLocators.SUCCESS_ORDER_MESSAGE).text
 
+    @allure.step("Создать заказ")
     def create_order(self, order_data):
         self.fill_first_order_form(
             order_data["name"],

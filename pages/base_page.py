@@ -1,4 +1,4 @@
-from selenium.webdriver.common.by import By
+from locators.base_page_locators import BasePageLocators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -54,7 +54,7 @@ class BasePage:
         element.send_keys(text)
 
     def click_body(self):
-        self.click_element((By.TAG_NAME, "body"))
+        self.click_element(BasePageLocators.BODY)
 
     def get_current_url(self):
         return self.driver.current_url
